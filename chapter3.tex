@@ -1,4 +1,101 @@
 \chapter{Practical aspects}
 \label{cha:practicalAspects}
 
-To achieve my goal of creating Visual Bicycle Counter I had to complete few steps. With tools chosen, my work was to create proper dataset for training ML model, train and evaluate this training to reach acceptable values of metrics i mentioned in section \ref{sec:theory}. After that I could start to work on customizing API detection script, to make it count cyclist rather than just detecting them using trained model. Lastly I used my edited script to run inference (detection) on other videos from a street camera on Lema Street, where bike road was modernized in July this year. I used videos before and after modernization, to prepare simple comparison, as an example  
+To achieve my goal of creating Visual Bicycle Counter I had to complete few steps. With tools chosen, my work was to create proper dataset for training ML model, train and evaluate this training to reach acceptable values of metrics i mentioned in section \ref{sec:theory}. After that I could start to work on customizing API detection script, to make it count cyclist rather than just detecting them using trained model. Lastly I used my edited script to run inference (detection) on other videos from a street camera on Lema Street, where bike road was modernized in July this year. I used videos before and after modernization, to prepare simple comparison, as an example of how data obtained by my Visual Bicycle Counter can be used.
+
+\section{Data collection}
+\label{sec:collection}
+First of all I had to collect data. To accomplish that, at the end of June 2020 I have created Virtual Machine (VM) with Ubuntu 18.04.5 Operating System (OS). Using Unix type OS was much easier and intuitive than using it on my Windows machine. After my VM was ready, steps to obtain video files from street camera stream were as follow:
+\begin{enumerate}
+    \item Installing ffmpeg for Ubuntu OS(from terminal):
+    \begin{itemize}
+        \item \colorbox{Gray}{sudo apt-get install ffmpeg}
+    \end{itemize}
+    \item Downloading and installing youtube-dl (from terminal):
+    \begin{itemize}
+        \item \colorbox{Gray}{sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl}
+        \item \colorbox{Gray}{sudo chmod a+rx /usr/local/bin/youtube-dl}
+    \end{itemize}
+    \item Creating bash script that runs youtube-dl with proper parameters what is shown in figure \ref{fig:script}
+    \begin{figure}[H]
+        \centering
+        \resizebox{\textwidth}{!}{\includegraphics{images/bashScript}}
+        \caption{This script runs youtube-dl, video files are saved to  directory with name containing stream name on http website and date of download. After 3599 seconds youtube-dl gets terminated.}
+        \label{fig:script}
+    \end{figure}
+    \item Adding created script to \colorbox{Gray}{crontab -e} to schedule its execution to every hour as we can see in figure below.
+    \begin{figure}[H]
+        \centering
+        \resizebox{\textwidth}{!}{\includegraphics{images/crontabList}}
+        \caption{output of \colorbox{Gray}{crontab -l} command which shows what commands execution was scheduled}
+        \label{fig:crontabList}
+    \end{figure}
+\end{enumerate}
+At this moment, downloading of video files proceeded automatically. Note that stable internet connection was very important as without it downloaded video files came out corrupted (damaged), what made them impossible to use later on.
+
+\section{Creating the dataset}
+\label{sec: dataset}
+After collecting enough videos I have started to create the dataset for training my YOLO model. This involved extracting frames from videos, choosing those with the most clear, visible cyclists, then manually labelling each image using LabelImg program and lastly divide labelled images on train and test data in ratio of approximately 8:2. To make it precise, those are steps I have taken:
+\begin{enumerate}
+    \item Frame extraction with VLC media player
+    \begin{itemize}
+        \item Scene Filter settings customization
+        \newline \colorbox{Gray}{Tools -> Preferences -> Show settings -> All -> Video/Filters/Scene Filter}
+        \begin{figure}[H]
+            \centering
+            \resizebox{\textwidth}{!}{\includegraphics{images/vlc1}}
+            \caption{Scene Filter edit window}
+            \label{fig:vlc1}
+        \end{figure}
+        \item Switching Scene filter on
+        \newline \colorbox{Gray}{Tools -> Preferences -> Show settings -> All -> Video/Filters -> check Scene video filter}
+        \item Restart VLC and run video file with it (at this point frames are extracted automatically) 
+    \end{itemize}
+    \item Selection of frames (I used about 200 different frames with various count of cyclists on them)
+    \item Manual frames labelling using LabelImg:
+    \begin{itemize}
+        \item after downloading LabelImg from repository, running it by executing command \colorbox{Gray}{python labelImg.py <images-path>} (Python3 or higher required) window shown in figure \ref{fig:labelimg} appears. It shows labelled image as well. To create label we simply click \includegraphics[scale=0.75]{images/button}
+        \begin{figure}[H]
+            \centering
+            \resizebox{\textwidth}{!}{\includegraphics{images/labelImg}}
+            \caption{LabelImg user interface with labelled image}
+            \label{fig:labelimg}
+        \end{figure}
+        Saving labelled frame will generate text file for this image with numeric label representation (one line in file for each label on image).
+        \begin{figure}[H]
+            \centering
+            \includegraphics{images/text}
+            \caption{Text file generated for image in figure \ref{fig:labelimg}}
+            \label{fig:labelimg}
+        \end{figure}
+    \end{itemize}
+    \item Partition of images and corresponding text files on train and test (val) data. To accomplish and to do this easier I have written Python script which randomly divides images with text files to two directories "train" and "val" in desired ratio (in my case it was 80\% to train the model and 20\% to test it)
+\end{enumerate}
+
+\section{Environment preparation, training model and running detection}
+\label{sec:env}
+As my working environment I have chosen Google Colaboratory (GC) machine. It provides me with 3 times more GPU memory as well as overall better (faster) GPU device than the one in my own computer, resulting in approximately 6 times faster training and detection processes. It was especially important while performing inference (detection), because GC's machine made this operation execute close to real time on 30 Frames Per Second (FPS) video files. My computer processed 5 frames per second while GC's machine processed almost 30 frames per second, what saved a lot of time. Also it turned out much more effective while running inference straight on video stream from website. Lastly GC's machine has good Python3 support what facilitated the work. I have created Jupyter Notebook file to run code cells one by one, to speed up my work, what came especially handy while starting work on next day, because sadly GC allows only few hours of inactivity before restarting session and unsaved files are gone. To start training I stored all necessary files like videos and labelled images on my Google Drive which could be connected to GC's machine. Also uploading files on the Drive and copying them on machine was the fastest way to access files from my computer. Training the model proceeded in few steps (figures below will show code cells that have been run):
+\begin{enumerate}
+    \item After setting \colorbox{Gray}{runtime type} to GPU I mounted (connected) my Google Drive to GC's machine what creates new directory on the machine named \colorbox{Gray}{gdrive} from which we can access Google Drive
+    \newline \begin{figure} [h]
+        \centering
+        \includegraphics{images/train1}
+        \caption{Mounting Drive}
+        \label{fig:train1}
+    \end{figure}
+    \item Then I cloned YoloV5 github repository
+    \newline \begin{figure} [h]
+        \centering
+        \includegraphics{images/train2}
+        \caption{Cloning repository to machine}
+        \label{fig:train2}
+    \end{figure}
+    \item After that I could run training process with installing wandb for evaluating the model after training.
+    \newline \begin{figure} [h]
+        \centering
+        \includegraphics{images/train1}
+        \caption{Mounting Drive}
+        \label{fig:train1}
+    \end{figure}
+    
+\end{enumerate}

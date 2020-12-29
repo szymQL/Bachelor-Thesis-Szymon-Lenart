@@ -2,6 +2,8 @@
 \documentclass[pdflatex,en]{aghdpl}  % praca w języku angielskim
 \usepackage[utf8]{inputenc}
 \usepackage{float}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pdfpages}
 
 % dodatkowe pakiety
 \usepackage{enumerate}
@@ -30,8 +32,8 @@
 
 \begin{document}
 
-\titlepages
-
+%\titlepages
+\includepdf[page=-]{title_page}
 \tableofcontents
 %\clearpage
 
