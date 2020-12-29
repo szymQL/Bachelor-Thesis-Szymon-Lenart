@@ -90,12 +90,37 @@ As my working environment I have chosen Google Colaboratory (GC) machine. It pro
         \caption{Cloning repository to machine}
         \label{fig:train2}
     \end{figure}
-    \item After that I could run training process with installing wandb for evaluating the model after training.
+    \item After that I could run training process with installed wandb for evaluating the model during and after training.
     \newline \begin{figure} [h]
         \centering
-        \includegraphics{images/train1}
-        \caption{Mounting Drive}
-        \label{fig:train1}
+         \resizebox{\textwidth}{!}{\includegraphics{images/train3}}
+        \caption{Command used for training the model}
+        \label{fig:train3}
     \end{figure}
-    
+    \newline Parameters used in command:
+    \begin{itemize}
+        \item img - bigger of two numbers in video resolution
+        \item batch - how many images to process at once (limited by GPU memory - in my case 8 was the biggest GPU could handle)
+        \item epochs - how many times to train the model on whole dataset
+        \item data - path to .yaml file which contains information about dataset
+        \item weights - path to weights file - empty for training from scratch, I used pretrained weights of yolov5l model, which offers the best accuracy within my desired execution time (<40ms).
+    \end{itemize}
 \end{enumerate}
+
+\section{Training Evaluation}
+\label{sec:eval}
+First command from figure \ref{fig:train3} installs wandb software on machine. It automatically collects data during training process and shows it in more accessible manner - charts. Below we can see how parameters mentioned in section \ref{sec:theory} (Recall, Precision and Loss) has been changing during training process. Also, weights with the best combination of those three parameters (marked on charts) will be used for performing inference.
+\begin{figure} [h]
+    \centering
+     \resizebox{\textwidth}{!}{\includegraphics{images/eval1}}
+    \caption{Changes of Recall, Precision and Loss during model training}
+    \label{fig:eval1}
+\end{figure}
+\newline As we can see, parameters of trained model I have been using while performing inference on video files I have collected look as follows:
+\begin{center}
+    \begin{tabular}{ccc}
+    Recall    & Precision     & Loss     \\
+    1 (100\%) & 0.9004 (90\%) & 0.002032
+    \end{tabular}
+\end{center}
+What basically means that every cyclist on test images was found (Recall), and 90\% of all detections are indeed cyclists (Precision). Also our model finds areas where detection is the most probable with very fast (Loss).  
