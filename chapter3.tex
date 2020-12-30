@@ -1,7 +1,7 @@
 \chapter{Practical aspects}
 \label{cha:practicalAspects}
 
-To achieve my goal of creating Visual Bicycle Counter I had to complete few steps. With tools chosen, my work was to create proper dataset for training ML model, train and evaluate this training to reach acceptable values of metrics i mentioned in section \ref{sec:theory}. After that I could start to work on customizing API detection script, to make it count cyclist rather than just detecting them using trained model. Lastly I used my edited script to run inference (detection) on other videos from a street camera on Lema Street, where bike road was modernized in July this year. I used videos before and after modernization, to prepare simple comparison, as an example of how data obtained by my Visual Bicycle Counter can be used.
+To achieve my goal of creating Visual Bicycle Counter, I had to complete a few steps. With tools chosen, my work was to create a proper dataset for training ML model, train and evaluate this training to reach acceptable values of metrics I mentioned in section \ref{sec:theory}. After that, I could customize the API detection script to make it count cyclist rather than just detecting them using the trained model. Lastly, I used my edited script to run inference (detection) on other videos from a street camera on Lema Street, where bike road was modernized in July this year. I used videos before and after modernization, to prepare a simple comparison, as an example of how data obtained by my Visual Bicycle Counter can be used.
 
 \section{Data collection}
 \label{sec:collection}
@@ -54,19 +54,19 @@ After collecting enough videos I have started to create the dataset for training
     \item Selection of frames (I used about 200 different frames with various count of cyclists on them)
     \item Manual frames labelling using LabelImg:
     \begin{itemize}
-        \item after downloading LabelImg from repository, running it by executing command \colorbox{Gray}{python labelImg.py <images-path>} (Python3 or higher required) window shown in figure \ref{fig:labelimg} appears. It shows labelled image as well. To create label we simply click \includegraphics[scale=0.75]{images/button}
+        \item after downloading LabelImg from repository, running it by executing command \colorbox{Gray}{python labelImg.py <images-path>} (Python3 or higher required) window shown in figure \ref{fig:labelimg1} appears. It shows labelled image as well. To create label we simply click \includegraphics[scale=0.75]{images/button}
         \begin{figure}[H]
             \centering
             \resizebox{\textwidth}{!}{\includegraphics{images/labelImg}}
             \caption{LabelImg user interface with labelled image}
-            \label{fig:labelimg}
+            \label{fig:labelimg1}
         \end{figure}
         Saving labelled frame will generate text file for this image with numeric label representation (one line in file for each label on image).
         \begin{figure}[H]
             \centering
             \includegraphics{images/text}
-            \caption{Text file generated for image in figure \ref{fig:labelimg}}
-            \label{fig:labelimg}
+            \caption{Text file generated for image in figure \ref{fig:labelimg1}}
+            \label{fig:labelimg2}
         \end{figure}
     \end{itemize}
     \item Partition of images and corresponding text files on train and test (val) data. To accomplish and to do this easier I have written Python script which randomly divides images with text files to two directories "train" and "val" in desired ratio (in my case it was 80\% to train the model and 20\% to test it)
@@ -74,26 +74,26 @@ After collecting enough videos I have started to create the dataset for training
 
 \section{Environment preparation, training model and running detection}
 \label{sec:env}
-As my working environment I have chosen Google Colaboratory (GC) machine. It provides me with 3 times more GPU memory as well as overall better (faster) GPU device than the one in my own computer, resulting in approximately 6 times faster training and detection processes. It was especially important while performing inference (detection), because GC's machine made this operation execute close to real time on 30 Frames Per Second (FPS) video files. My computer processed 5 frames per second while GC's machine processed almost 30 frames per second, what saved a lot of time. Also it turned out much more effective while running inference straight on video stream from website. Lastly GC's machine has good Python3 support what facilitated the work. I have created Jupyter Notebook file to run code cells one by one, to speed up my work, what came especially handy while starting work on next day, because sadly GC allows only few hours of inactivity before restarting session and unsaved files are gone. To start training I stored all necessary files like videos and labelled images on my Google Drive which could be connected to GC's machine. Also uploading files on the Drive and copying them on machine was the fastest way to access files from my computer. Training the model proceeded in few steps (figures below will show code cells that have been run):
+As my working environment, I have chosen Google Colaboratory (GC) machine. It provides me with three times more GPU memory and overall better (faster) GPU device than the one in my computer, resulting in approximately six times faster training and detection processes. It was essential while performing inference (detection) because GC's machine-made this operation execute close to real-time on 30 Frames Per Second (FPS) video files. My computer-processed five frames per second while GC's machine processed almost 30 frames per second, what saved much time. Also, it turned out much more effective while running inference straight on the video stream from the website. Lastly, GC's machine has good Python3 support what facilitated the work. I have created Jupyter Notebook file to run code cells one by one, to speed up my work, what came especially handy while starting work on next day because sadly GC allows only a few hours of inactivity before restarting session and unsaved files are gone. To start training, I stored all necessary files like videos and labelled images on my Google Drive, connected to GC's machine. Also uploading files on the Drive and copying them on the machine was the fastest way to access my computer files. Training the model proceeded in few steps (figures below will show code cells that have been run):
 \begin{enumerate}
-    \item After setting \colorbox{Gray}{runtime type} to GPU I mounted (connected) my Google Drive to GC's machine what creates new directory on the machine named \colorbox{Gray}{gdrive} from which we can access Google Drive
+    \item After setting \colorbox{Gray}{runtime type} to GPU I mounted (connected) my Google Drive to GC's machine what creates a new directory on the machine named \colorbox{Gray}{gdrive} from which we can access Google Drive
     \newline \begin{figure} [h]
         \centering
         \includegraphics{images/train1}
         \caption{Mounting Drive}
         \label{fig:train1}
     \end{figure}
-    \item Then I cloned YoloV5 github repository
+    \item Then I cloned YoloV5 GitHub repository
     \newline \begin{figure} [h]
         \centering
-        \includegraphics{images/train2}
+        \resizebox{\textwidth}{!}{\includegraphics{images/train2}}
         \caption{Cloning repository to machine}
         \label{fig:train2}
     \end{figure}
-    \item After that I could run training process with installed wandb for evaluating the model during and after training.
+    \item After that, I could run the training process with installed wandb for evaluating the model during and after training.
     \newline \begin{figure} [h]
         \centering
-         \resizebox{\textwidth}{!}{\includegraphics{images/train3}}
+        \resizebox{\textwidth}{!}{\includegraphics{images/train3}}
         \caption{Command used for training the model}
         \label{fig:train3}
     \end{figure}
@@ -109,7 +109,7 @@ As my working environment I have chosen Google Colaboratory (GC) machine. It pro
 
 \section{Training Evaluation}
 \label{sec:eval}
-First command from figure \ref{fig:train3} installs wandb software on machine. It automatically collects data during training process and shows it in more accessible manner - charts. Below we can see how parameters mentioned in section \ref{sec:theory} (Recall, Precision and Loss) has been changing during training process. Also, weights with the best combination of those three parameters (marked on charts) will be used for performing inference.
+The first command from figure \ref{fig:train3} installs wandb software on the machine. It automatically collects data during the training process and shows it in a more accessible manner - charts. Below we can see how parameters mentioned in section \ref{sec:theory} (Recall, Precision and Loss) has been changing during the training process. Also, weights with the best combination of those three parameters (marked on charts) will be used for performing inference.
 \begin{figure} [h]
     \centering
      \resizebox{\textwidth}{!}{\includegraphics{images/eval1}}
@@ -154,7 +154,7 @@ Running detection process is also really easy with YOLOv5 API, because it contai
         \centering
          \resizebox{\textwidth}{!}{\includegraphics{images/inference3}}
         \caption{Copying video file from mounted drive after uploading video file to it (faster)}
-        \label{fig:inference4}
+        \label{fig:inference3}
     \end{figure}
     \item Running detection process
     \newline \begin{figure} [h]
@@ -172,20 +172,20 @@ Running detection process is also really easy with YOLOv5 API, because it contai
         \item conf - confidence threshold value (probability that detected object is indeed cyclist) - everything with higher confidence is considered as cyclist.
     \end{itemize}
 \end{enumerate}
-On figure below we can see a frame from video on which inference was performed (with counter already implemented).
+The figure below shows a frame from a video on which inference was performed (with Counter already implemented).
 \begin{figure} [h]
     \centering
      \resizebox{\textwidth}{!}{\includegraphics{images/inference}}
-    \caption{Frame from video file generated during detection process}
+    \caption{Frame from video file generated during the detection process}
     \label{fig:inference}
 \end{figure}
-During testing phase I have been saving every video generated during inference process, but after that I quit doing that, because a generated video were almost 5 times bigger than the original one (1 hour video downloaded from website video stream was approximately 700MB big, so saving every result of inference would fill my Google Drive memory very quickly). Instead I have implemented that at the end of execution of \colorbox{Gray}{detect.py} information about video was written to \colorbox{Gray}{result.csv} file (video name, video duration, cyclist count).
+During the testing phase, I have been saving every video generated during the inference process. However, after that I quit doing that, because a generated video was almost five times bigger than the original one (1-hour video downloaded from website video stream was approximately 700MB big, so saving every result of inference would fill my Google Drive memory very quickly). Instead, I have implemented that at the end of execution of \colorbox{Gray}{detect.py} information about the video was written to \colorbox{Gray}{result.csv} file (video name, video duration, cyclist count).
 \section{Exemplary evaluation of results}
 \label{sec:results}
-To familiarize with potential of Visual Bicycle Counter I have prepared exemplary interpretation of data gathered by the Counter. I have chosen video files collected between 10 AM and 8 PM from a random week before modernization of bike road on Lema Street and performed inference on them. The same I have done with videos from random week after modernization. This is how collected data looks like graphically:
+To familiarize with the potential of Visual Bicycle Counter, I have prepared an exemplary interpretation of the Counter's data. I had chosen video files collected between 10 AM and 8 PM from a random week before modernization of bike road on Lema Street and performed inference on them. The same I have done with videos from the random week after modernization. This is how the collected data looks like graphically:
 \begin{figure} [h]
     \centering
      \resizebox{\textwidth}{!}{\includegraphics{images/graph}}
     \label{fig:graph}
 \end{figure}
-Even this simple example provides important information whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was actually higher than in June. This could be one of ways to evaluate local government's projects.
+Even this simple example provides important information on whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was higher than in June. It could be one of the ways to evaluate local government's projects.

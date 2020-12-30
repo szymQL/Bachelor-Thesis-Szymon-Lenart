@@ -10,39 +10,19 @@
 \usepackage{enumerate}
 \usepackage{listings}
 \usepackage[nottoc]{tocbibind}
-%---------------------------------------------------------------------------
-
-\author{Szymon Lenart}
-\shortauthor{Sz. Lenart}
-
-\titleEN{Visual Bicycle Counter}
-
-\thesistypeEN{Bachelor of Science Thesis}
-
-\supervisorEN{Mikołaj Leszczuk Ph.D}
-
-\date{2020}
-
-\facultyEN{Faculty of Electrical Engineering, Computer Science and Electronics}
-
-%\acknowledgements{Serdecznie dziękuję \dots tu ciąg dalszych podziękowań np. dla promotora, żony, sąsiada itp.}
-
-\setlength{\cftsecnumwidth}{10mm}
-
-%---------------------------------------------------------------------------
 
 \begin{document}
 
-\includepdf[page=-]{title_page}
+\includepdf{title_page}
 
 \include{ack}
 
 \tableofcontents
 
-\include{chapter1}
-\include{chapter2}
-\include{chapter3}
-\include{chapter4}
+\input{chapter1}
+\input{chapter2}
+\input{chapter3}
+\input{chapter4}
 
 \bibliographystyle{unsrt}
 \bibliography{bibliography}

@@ -30,80 +30,11 @@
 \geometry{lmargin=30mm, rmargin=20mm, tmargin=25mm, bmargin=25mm, foot=10mm, head=10mm}
 \definecolor{Green}{rgb}{0.1,0.5,0.1}
 
-\def\shortauthor#1    {\gdef\@shortauthor{#1}}
-\def\titleEN#1        {\gdef\@titleEN{#1}}
-\def\facultyEN#1      {\gdef\@facultyEN{#1}}
-\def\thesistypeEN#1   {\gdef\@thesistypeEN{#1}}
-\def\supervisorEN#1   {\gdef\@supervisorEN{#1}}
-\def\acknowledgements#1   {\gdef\@acknowledgements{#1}}
-\def\departmentEN#1   {\gdef\@departmentEN{#1}}
-
-% \thesisheaders
-% 
-% \pagestyle{fancy}
-
-%\bibliographystyle{abbrv}
 \linespread{1.3}
 \renewcommand{\labelitemi}{--}
 
 %------------------------------------------------------------------------------
 
-\newcommand{\titlepages}{
-
-\begin{center}
-
-{\sffamily{\Large{\bfseries{\textsc AGH\\[2mm]
-University of Science and Technology in Krakow}}}
-
-\vspace*{1mm}\rule{\textwidth}{1mm}\vspace*{1mm}
-
-{\large \@facultyEN}}\\\vspace*{2mm}
-{\large\textsc{\@departmentEN}}\vspace*{1cm}
-
-\ifpdflatex\includegraphics[scale=0.3]{images/agh}
-\else\includegraphics[scale=0.7]{images/agh}
-\fi
-\vspace*{1cm}
-
-{\huge\scshape \@thesistypeEN}\\\vspace*{2cm}
-
-{\LARGE\scshape \@author}\\\vspace*{2cm}
-
-{\LARGE{\bfseries\scshape \@titleEN}}\\\vspace*{3cm}
-
-\begin{flushright}
-\begin{minipage}[!h]{6cm} 
-\large{\scshape Supervisor:}\\ \@supervisorEN
-\end{minipage}
-\end{flushright}
-
-\vfill{\Large Krakow \@date}
-
-\end{center}
-
-\clearpage \titlepage
-
-\vspace*{15cm} \vfill
-\begin{flushright} 
-\begin{minipage}[!h]{8cm}
-{\Large \@acknowledgements}
-\end{minipage}
-\end{flushright}
-
-
-\setcounter{page}{2}
-
-}
-
-\def\thesisheaders{
-\fancyfoot[L]{\small \@shortauthor\quad\textit{\@shorttitlePL}}
-}
-
-\DeclareOption{en}{
-\def\thesisheaders{
-\fancyfoot[L]{\small \@shortauthor\quad\textit{\@shorttitleEN}}
-}
-}
 
 \ProcessOptions
 
@@ -116,8 +47,6 @@ University of Science and Technology in Krakow}}}
 \fancyhead{}
 \fancyhead[L]{\slshape{\small \rightmark}}
 \fancyhead[R]{\bfseries \thepage}
-
-\thesisheaders
 
 \frenchspacing
 \sloppy 
