@@ -123,4 +123,69 @@ First command from figure \ref{fig:train3} installs wandb software on machine. I
     1 (100\%) & 0.9004 (90\%) & 0.002032
     \end{tabular}
 \end{center}
-What basically means that every cyclist on test images was found (Recall), and 90\% of all detections are indeed cyclists (Precision). Also our model finds areas where detection is the most probable with very fast (Loss).  
+What basically means that every cyclist on test images was found (Recall), and 90\% of all detections are indeed cyclists (Precision). Also our model finds areas where detection is the most probable with very fast (Loss).
+
+\section{Counter implementation and running inference}
+\label{sec:inference}
+Running detection process is also really easy with YOLOv5 API, because it contains ready to use script \colorbox{Gray}{detect.py} that can be executed right away on video file or stream. Implementing counter was more of a challenge, because it is not implemented in API. I have chosen straight forward solution - when a detected cyclist crosses a virtual line, counter value goes up. This approach was possible because of my Recall and Precision being on very good level. I knew every cyclist is detected on every frame of video (100\% Recall) and 90\% of detected objects are actually cyclists (Precision). Every script I have customized is put on public Github Repository\cite{repo}. Running detection process on GC's machine proceeded as follows:
+\begin{enumerate}
+    \item Mounting Google Drive on GC's machine
+    \newline \begin{figure} [h]
+        \centering
+        \includegraphics{images/train1}
+        \caption{Mounting Drive}
+        \label{fig:inference0}
+    \end{figure}
+    \item Copying model from Drive, unzipping it and installing required dependencies 
+    \newline \begin{figure} [h]
+        \centering
+        \resizebox{\textwidth}{!}{\includegraphics{images/inference1}}
+        \caption{Installing ready API on machine}
+        \label{fig:inference1}
+    \end{figure}
+    \item Uploading video for perform inference on it (two ways)
+    \newline \begin{figure} [h]
+        \centering
+         \resizebox{\textwidth}{!}{\includegraphics{images/inference2}}
+        \caption{Uploading video file straight from local machine to GC's machine (slower)}
+        \label{fig:inference2}
+    \end{figure}
+    \newline \begin{figure} [h]
+        \centering
+         \resizebox{\textwidth}{!}{\includegraphics{images/inference3}}
+        \caption{Copying video file from mounted drive after uploading video file to it (faster)}
+        \label{fig:inference4}
+    \end{figure}
+    \item Running detection process
+    \newline \begin{figure} [h]
+        \centering
+         \resizebox{\textwidth}{!}{\includegraphics{images/inference4}}
+        \caption{Command used for performing inference on video file using customized \colorbox{Gray}{detect.py} script}
+        \label{fig:inference4}
+    \end{figure}
+    \newline Parameters used in command:
+    \begin{itemize}
+        \item img - bigger of two numbers in video resolution
+        \item source - path to video file
+        \item weights - path to weights file (\colorbox{Gray}{best.pt} are best weights from training model) basically it is path to model we will use to detect cyclist
+        \item classes - identifier of detection classes to not filter out (\colorbox{Gray}{15} means that we only want to detect cyclists)
+        \item conf - confidence threshold value (probability that detected object is indeed cyclist) - everything with higher confidence is considered as cyclist.
+    \end{itemize}
+\end{enumerate}
+On figure below we can see a frame from video on which inference was performed (with counter already implemented).
+\begin{figure} [h]
+    \centering
+     \resizebox{\textwidth}{!}{\includegraphics{images/inference}}
+    \caption{Frame from video file generated during detection process}
+    \label{fig:inference}
+\end{figure}
+During testing phase I have been saving every video generated during inference process, but after that I quit doing that, because a generated video were almost 5 times bigger than the original one (1 hour video downloaded from website video stream was approximately 700MB big, so saving every result of inference would fill my Google Drive memory very quickly). Instead I have implemented that at the end of execution of \colorbox{Gray}{detect.py} information about video was written to \colorbox{Gray}{result.csv} file (video name, video duration, cyclist count).
+\section{Exemplary evaluation of results}
+\label{sec:results}
+To familiarize with potential of Visual Bicycle Counter I have prepared exemplary interpretation of data gathered by the Counter. I have chosen video files collected between 10 AM and 8 PM from a random week before modernization of bike road on Lema Street and performed inference on them. The same I have done with videos from random week after modernization. This is how collected data looks like graphically:
+\begin{figure} [h]
+    \centering
+     \resizebox{\textwidth}{!}{\includegraphics{images/graph}}
+    \label{fig:graph}
+\end{figure}
+Even this simple example provides important information whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was actually higher than in June. This could be one of ways to evaluate local government's projects.
