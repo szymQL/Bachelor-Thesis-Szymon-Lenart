@@ -182,10 +182,24 @@ The figure below shows a frame from a video on which inference was performed (wi
 During the testing phase, I have been saving every video generated during the inference process. However, after that I quit doing that, because a generated video was almost five times bigger than the original one (1-hour video downloaded from website video stream was approximately 700MB big, so saving every result of inference would fill my Google Drive memory very quickly). Instead, I have implemented that at the end of execution of \colorbox{Gray}{detect.py} information about the video was written to \colorbox{Gray}{result.csv} file (video name, video duration, cyclist count).
 \section{Exemplary evaluation of results}
 \label{sec:results}
-To familiarize with the potential of Visual Bicycle Counter, I have prepared an exemplary interpretation of the Counter's data. I had chosen video files collected between 10 AM and 8 PM from a random week before modernization of bike road on Lema Street and performed inference on them. The same I have done with videos from the random week after modernization. This is how the collected data looks like graphically:
-\begin{figure} [h]
+To familiarize with the potential of Visual Bicycle Counter, I have prepared an exemplary interpretation of the Counter's data. I had chosen video files collected between 10 AM and 8 PM from a random week before modernization of bike road on Lema Street and performed inference on them. The same I have done with videos from the random week after modernization. I have aggregated this data to show mean value for each hour of the day of the week and put it on a graph. This is how the aggregated data looks like graphically:
+\begin{figure}[h]
     \centering
-     \resizebox{\textwidth}{!}{\includegraphics{images/graph}}
+    \resizebox{\textwidth}{!}{\includegraphics{images/graph}}
+    \caption{Mean cyclists count in week scale (Lema Street)}
     \label{fig:graph}
 \end{figure}
-Even this simple example provides important information on whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was higher than in June. It could be one of the ways to evaluate local government's projects.
+\newline Even this simple example provides important information on whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was higher than in June. It could be one of the ways to evaluate local government's projects. Second example showing different measure that can be taken with data collected by the Counter is to simply take daily cyclists count and compare it on the scale of the month. In figure \ref{fig:j-s} we can see cyclists count collected in June and September as well as sum of those numbers.
+\begin{figure}
+    \centering
+    \includegraphics{images/tableJS}
+    \caption{June and September cyclists count}
+    \label{fig:j-s}
+\end{figure}
+Showing this data on a graph like in figure \ref{fig:j-s2} won't show striking differences, but we can still see that overall more cyclists were detected in September than in June. There can be a lot of reasons why data is like this, but collected numbers are very good indicators to compare with other parameters like weather conditions in specific month (temperature, rainfall level).
+\begin{figure}
+    \centering
+    \resizebox{\textwidth}{!}{\includegraphics{images/graph2}}
+    \caption{Cyclists count in June and September}
+    \label{fig:j-s2}
+\end{figure}
