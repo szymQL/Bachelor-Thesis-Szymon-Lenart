@@ -1,9 +1,9 @@
-\chapter{Practical aspects}
+\chapter{Practical Aspects}
 \label{cha:practicalAspects}
 
 To achieve my goal of creating Visual Bicycle Counter, I had to complete a few steps. With tools chosen, my work was to create a proper dataset for training ML model, train and evaluate this training to reach acceptable values of metrics I mentioned in section \ref{sec:theory}. After that, I could customize the API detection script to make it count cyclist rather than just detecting them using the trained model. Lastly, I used my edited script to run inference (detection) on other videos from a street camera on Lema Street, where bike road was modernized in July this year. I used videos before and after modernization, to prepare a simple comparison, as an example of how data obtained by my Visual Bicycle Counter can be used.
 
-\section{Data collection}
+\section{Data Collection}
 \label{sec:collection}
 First of all I had to collect data. To accomplish that, at the end of June 2020 I have created Virtual Machine (VM) with Ubuntu 18.04.5 Operating System (OS). Using Unix type OS was much easier and intuitive than using it on my Windows machine. After my VM was ready, steps to obtain video files from street camera stream were as follow:
 \begin{enumerate}
@@ -33,7 +33,7 @@ First of all I had to collect data. To accomplish that, at the end of June 2020 
 \end{enumerate}
 At this moment, downloading of video files proceeded automatically. Note that stable internet connection was very important as without it downloaded video files came out corrupted (damaged), what made them impossible to use later on.
 
-\section{Creating the dataset}
+\section{Creating the Dataset}
 \label{sec: dataset}
 After collecting enough videos I have started to create the dataset for training my YOLO model. This involved extracting frames from videos, choosing those with the most clear, visible cyclists, then manually labelling each image using LabelImg program and lastly divide labelled images on train and test data in ratio of approximately 8:2. To make it precise, those are steps I have taken:
 \begin{enumerate}
@@ -72,7 +72,7 @@ After collecting enough videos I have started to create the dataset for training
     \item Partition of images and corresponding text files on train and test (val) data. To accomplish and to do this easier I have written Python script which randomly divides images with text files to two directories "train" and "val" in desired ratio (in my case it was 80\% to train the model and 20\% to test it)
 \end{enumerate}
 
-\section{Environment preparation, training model and running detection}
+\section{Environment Preparation, Training Model and Running Detection}
 \label{sec:env}
 As my working environment, I have chosen Google Colaboratory (GC) machine. It provides me with three times more GPU memory and overall better (faster) GPU device than the one in my computer, resulting in approximately six times faster training and detection processes. It was essential while performing inference (detection) because GC's machine-made this operation execute close to real-time on 30 Frames Per Second (FPS) video files. My computer-processed five frames per second while GC's machine processed almost 30 frames per second, what saved much time. Also, it turned out much more effective while running inference straight on the video stream from the website. Lastly, GC's machine has good Python3 support what facilitated the work. I have created Jupyter Notebook file to run code cells one by one, to speed up my work, what came especially handy while starting work on next day because sadly GC allows only a few hours of inactivity before restarting session and unsaved files are gone. To start training, I stored all necessary files like videos and labelled images on my Google Drive, connected to GC's machine. Also uploading files on the Drive and copying them on the machine was the fastest way to access my computer files. Training the model proceeded in few steps (figures below will show code cells that have been run):
 \begin{enumerate}
@@ -125,7 +125,7 @@ The first command from figure \ref{fig:train3} installs wandb software on the ma
 \end{center}
 What basically means that every cyclist on test images was found (Recall), and 90\% of all detections are indeed cyclists (Precision). Also our model finds areas where detection is the most probable with very fast (Loss).
 
-\section{Counter implementation and running inference}
+\section{Counter Implementation and Running Inference}
 \label{sec:inference}
 Running detection process is also really easy with YOLOv5 API, because it contains ready to use script \colorbox{Gray}{detect.py} that can be executed right away on video file or stream. Implementing counter was more of a challenge, because it is not implemented in API. I have chosen straight forward solution - when a detected cyclist crosses a virtual line, counter value goes up. This approach was possible because of my Recall and Precision being on very good level. I knew every cyclist is detected on every frame of video (100\% Recall) and 90\% of detected objects are actually cyclists (Precision). Every script I have customized is put on public Github Repository\cite{repo}. Running detection process on GC's machine proceeded as follows:
 \begin{enumerate}
@@ -172,30 +172,66 @@ Running detection process is also really easy with YOLOv5 API, because it contai
         \item conf - confidence threshold value (probability that detected object is indeed cyclist) - everything with higher confidence is considered as cyclist.
     \end{itemize}
 \end{enumerate}
-The figure below shows a frame from a video on which inference was performed (with Counter already implemented).
+The figure below shows a frame from a video on which inference was performed with Counter already implemented (different cameras has counter line put on different place of course)
 \begin{figure} [h]
     \centering
      \resizebox{\textwidth}{!}{\includegraphics{images/inference}}
-    \caption{Frame from video file generated during the detection process}
+    \caption{Frame from video file generated during the detection process (examplary inference performed on video file from camera on Lema Street)}
     \label{fig:inference}
 \end{figure}
 During the testing phase, I have been saving every video generated during the inference process. However, after that I quit doing that, because a generated video was almost five times bigger than the original one (1-hour video downloaded from website video stream was approximately 700MB big, so saving every result of inference would fill my Google Drive memory very quickly). Instead, I have implemented that at the end of execution of \colorbox{Gray}{detect.py} information about the video was written to \colorbox{Gray}{result.csv} file (video name, video duration, cyclist count).
-\section{Exemplary evaluation of results}
+\section{Exemplary Evaluation of Results}
 \label{sec:results}
 To familiarize with the potential of Visual Bicycle Counter, I have prepared an exemplary interpretation of the Counter's data. I had chosen video files collected between 10 AM and 8 PM from a random week before modernization of bike road on Lema Street and performed inference on them. The same I have done with videos from the random week after modernization. I have aggregated this data to show mean value for each hour of the day of the week and put it on a graph. This is how the aggregated data looks like graphically:
 \begin{figure}[h]
     \centering
     \resizebox{\textwidth}{!}{\includegraphics{images/graph}}
-    \caption{Mean cyclists count in week scale (Lema Street)}
+    \caption{Cyclists count during the day (weekly mean value) on Lema Street}
     \label{fig:graph}
 \end{figure}
-\newline Even this simple example provides important information on whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was higher than in June. It could be one of the ways to evaluate local government's projects. Second example showing different measure that can be taken with data collected by the Counter is to simply take daily cyclists count and compare it on the scale of the month. In figure \ref{fig:j-s} we can see cyclists count collected in June and September as well as sum of those numbers.
-\begin{figure}
-    \centering
-    \includegraphics{images/tableJS}
-    \caption{June and September cyclists count}
-    \label{fig:j-s}
-\end{figure}
+\newline Even this simple example provides important information on whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was higher than in June. It could be one of the ways to evaluate local government's projects. Second example showing different measure that can be taken with data collected by the Counter is to simply take daily cyclists count and compare it on the scale of the month. In table \ref{tab:j-s} we can see cyclists count collected in June and September (between 8 AM and 6 PM - I have chosen those hours because in September it gets quite dark after 6 PM, so there is less cyclists) as well as sum of those numbers.
+\begin{table}[]
+\centering
+\begin{tabular}{|r|r|r|}
+\hline
+\multicolumn{1}{|l|}{}                 & \multicolumn{2}{c|}{Cyclist count}                         \\ \hline
+\multicolumn{1}{|l|}{Day of the month} & \multicolumn{1}{l|}{June} & \multicolumn{1}{l|}{September} \\ \hline
+1                                      & 2062                      & 772                            \\ \hline
+2                                      & 1638                      & 1728                           \\ \hline
+3                                      & 2037                      & 2400                           \\ \hline
+4                                      & 2247                      & 2081                           \\ \hline
+5                                      & 974                       & 2119                           \\ \hline
+6                                      & 2447                      & 701                            \\ \hline
+7                                      & 1420                      & 1026                           \\ \hline
+8                                      & 1184                      & 2358                           \\ \hline
+9                                      & 1633                      & 2614                           \\ \hline
+10                                     & 1407                      & 1921                           \\ \hline
+11                                     & 1789                      & 2248                           \\ \hline
+12                                     & 1540                      & 2011                           \\ \hline
+13                                     & 1588                      & 2094                           \\ \hline
+14                                     & 1364                      & 2476                           \\ \hline
+15                                     & 2007                      & 2602                           \\ \hline
+16                                     & 1475                      & 2677                           \\ \hline
+17                                     & 1255                      & 1837                           \\ \hline
+18                                     & 1533                      & 1840                           \\ \hline
+19                                     & 1179                      & 1622                           \\ \hline
+20                                     & 1314                      & 1624                           \\ \hline
+21                                     & 631                       & 2124                           \\ \hline
+22                                     & 772                       & 2463                           \\ \hline
+23                                     & 2505                      & 2242                           \\ \hline
+24                                     & 1720                      & 2151                           \\ \hline
+25                                     & 2222                      & 1547                           \\ \hline
+26                                     & 1729                      & 735                            \\ \hline
+27                                     & 1648                      & 838                            \\ \hline
+28                                     & 2063                      & 963                            \\ \hline
+29                                     & 1201                      & 1321                           \\ \hline
+30                                     & 2659                      & 552                            \\ \hline
+\multicolumn{1}{|l|}{Sum}              & 49243                     & 53687                          \\ \hline
+\end{tabular}
+\caption{Daily cyclists count collected from street camera near ICE Krakow Conference Center - comparison of June (before modernization) and September (after modernization)}
+\label{tab:j-s}
+\end{table}
+
 Showing this data on a graph like in figure \ref{fig:j-s2} won't show striking differences, but we can still see that overall more cyclists were detected in September than in June. There can be a lot of reasons why data is like this, but collected numbers are very good indicators to compare with other parameters like weather conditions in specific month (temperature, rainfall level).
 \begin{figure}
     \centering
