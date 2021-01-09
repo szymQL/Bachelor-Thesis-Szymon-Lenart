@@ -1,20 +1,23 @@
 \chapter{Exemplary Evaluation of Results}
 \label{cha:results}
-To familiarize with the potential of Visual Bicycle Counter, I have prepared an exemplary interpretation of the Counter's data. I have been collecting video files from two street cameras - one near ICE Krakow Congress Centre and second on Lema Street. Figure \ref{fig:map} shows those cameras' position on map of Krakow.
+To familiarize with the potential of Visual Bicycle Counter, I have prepared an exemplary interpretation of the Counter's data. I have been collecting video files from two street cameras --- one near ICE Krakow Congress Centre and second on Lema Street. Figure \ref{fig:map} shows those cameras' position on map of Krakow.
 \begin{figure}[H]
     \centering
     \resizebox{\textwidth}{!}{\includegraphics{images/map}}
-    \caption{Position of cameras data below comes from\cite{mapa}}
+    \caption{Position of cameras data below comes from "worldcam.pl" website\cite{mapa}}
     \label{fig:map}
 \end{figure}
-For first example I had chosen video files collected between 8:30 AM and 6:30 PM on June and September on bike road near ICE Krakow Congress Centre and performed inference on them. Tables \ref{tab:iceCountJune} and \ref{tab:iceCountSeptember} shows collected cyclists count. Table \ref{tab:iceDaily} aggregates this data to show number of cyclists per day of both months.
+
+\section{Data Collected From Camera Near Ice Krakow Congress Centre}
+\label{sec:ice}
+For first example I had chosen video files collected between 8:30 AM and 6:30 PM on June and September on bike road near ICE Krakow Congress Centre and performed inference on them. Tables \ref{tab:iceCountJune} and \ref{tab:iceCountSeptember} shows collected cyclists count. Table \ref{tab:iceDaily} aggregates this data to show number of cyclists per day of both months. All collected raw data is also accessible on repositories \cite{repo}, \cite{repoSL}.
 \begin{table}[H]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}{|r|r|r|r|r|r|r|r|r|r|r|}
 \hline
 \multicolumn{1}{|l|}{} & \multicolumn{10}{c|}{Cyclist count throughout the day (June)}                                                                                                                                                                                                                                                                                            \\ \hline
-\multicolumn{1}{|l|}{} & \multicolumn{1}{l|}{8:30-9:30} & \multicolumn{1}{l|}{9:30-10:30} & \multicolumn{1}{l|}{10:30-11:30} & \multicolumn{1}{l|}{11:30-12:30} & \multicolumn{1}{l|}{12:30-13:30} & \multicolumn{1}{l|}{13:30-14:30} & \multicolumn{1}{l|}{14:30-15:30} & \multicolumn{1}{l|}{15:30-16:30} & \multicolumn{1}{l|}{16:30-17:30} & \multicolumn{1}{l|}{17:30-18:30} \\ \hline
+\multicolumn{1}{|l|}{} & \multicolumn{1}{l|}{8:30--9:30} & \multicolumn{1}{l|}{9:30--10:30} & \multicolumn{1}{l|}{10:30--11:30} & \multicolumn{1}{l|}{11:30--12:30} & \multicolumn{1}{l|}{12:30--13:30} & \multicolumn{1}{l|}{13:30--14:30} & \multicolumn{1}{l|}{14:30--15:30} & \multicolumn{1}{l|}{15:30--16:30} & \multicolumn{1}{l|}{16:30--17:30} & \multicolumn{1}{l|}{17:30--18:30} \\ \hline
 1.                     & 307                            & 404                             & 308                              & 302                              & 428                              & 221                              & 98                               & 235                              & 207                              & 239                              \\ \hline
 2.                     & 357                            & 313                             & 291                              & 196                              & 214                              & 198                              & 332                              & 141                              & 60                               & 82                               \\ \hline
 3.                     & 148                            & 337                             & 479                              & 47                               & 390                              & 330                              & 401                              & 132                              & 78                               & 374                              \\ \hline
@@ -55,7 +58,7 @@ For first example I had chosen video files collected between 8:30 AM and 6:30 PM
 \begin{tabular}{|r|r|r|r|r|r|r|r|r|r|r|}
 \hline
 \multicolumn{1}{|l|}{} & \multicolumn{10}{c|}{Cyclist count throughout the day (September)}                                                                                                                                                                                                                                                                                       \\ \hline
-\multicolumn{1}{|l|}{} & \multicolumn{1}{l|}{8:30-9:30} & \multicolumn{1}{l|}{9:30-10:30} & \multicolumn{1}{l|}{10:30-11:30} & \multicolumn{1}{l|}{11:30-12:30} & \multicolumn{1}{l|}{12:30-13:30} & \multicolumn{1}{l|}{13:30-14:30} & \multicolumn{1}{l|}{14:30-15:30} & \multicolumn{1}{l|}{15:30-16:30} & \multicolumn{1}{l|}{16:30-17:30} & \multicolumn{1}{l|}{17:30-18:30} \\ \hline
+\multicolumn{1}{|l|}{} & \multicolumn{1}{l|}{8:30--9:30} & \multicolumn{1}{l|}{9:30--10:30} & \multicolumn{1}{l|}{10:30--11:30} & \multicolumn{1}{l|}{11:30--12:30} & \multicolumn{1}{l|}{12:30--13:30} & \multicolumn{1}{l|}{13:30--14:30} & \multicolumn{1}{l|}{14:30--15:30} & \multicolumn{1}{l|}{15:30--16:30} & \multicolumn{1}{l|}{16:30--17:30} & \multicolumn{1}{l|}{17:30--18:30} \\ \hline
 1.                     & 78                             & 138                             & 71                               & 126                              & 174                              & 153                              & 157                              & 10                               & 73                               & 36                               \\ \hline
 2.                     & 326                            & 294                             & 288                              & 127                              & 211                              & 93                               & 105                              & 461                              & 258                              & 110                              \\ \hline
 3.                     & 540                            & 400                             & 237                              & 353                              & 102                              & 154                              & 340                              & 323                              & 439                              & 270                              \\ \hline
@@ -87,7 +90,7 @@ For first example I had chosen video files collected between 8:30 AM and 6:30 PM
 29.                    & 234                            & 207                             & 168                              & 187                              & 201                              & 160                              & 246                              & 41                               & 76                               & 218                              \\ \hline
 30.                    & 105                            & 62                              & 72                               & 12                               & 78                               & 105                              & 38                               & 42                               & 95                               & 117                              \\ \hline
 \end{tabular}}
-\caption{Cyclists count collected from street camera at bike road near ICE Krakow Congress Centre - September}
+\caption{Cyclists count collected from street camera at bike road near ICE Krakow Congress Centre --- September}
 \label{tab:iceCountSeptember}
 \end{table}
 \begin{table}[H]
@@ -128,31 +131,34 @@ For first example I had chosen video files collected between 8:30 AM and 6:30 PM
 30                                     & 3545                      & 726                            \\ \hline
 \multicolumn{1}{|l|}{Sum}              & 65655                     & 70644                          \\ \hline
 \end{tabular}
-\caption{Daily cyclists count collected from street camera near ICE Krakow Conference Center (sum of numbers for each day from tables \ref{tab:iceCountJune} and \ref{tab:iceCountSeptember}).}
+\caption{Daily cyclists count collected from street camera near ICE Krakow Conference Center (sum of numbers for each day from Tables \ref{tab:iceCountJune} and \ref{tab:iceCountSeptember}).}
 \label{tab:iceDaily}
 \end{table}
 
-I have aggregated this data and put it on a graphs. Figure \ref{fig:graph2} shows graphical comparison of mean cyclists count during the day basing on data data from tables \ref{tab:iceCountJune} and \ref{tab:iceCountSeptember} (monthly mean value for each hour).
+I have aggregated this data and put it on a graphs. Figure \ref{fig:graph2} shows graphical comparison of mean cyclists count during the day basing on data data from Tables \ref{tab:iceCountJune} and \ref{tab:iceCountSeptember} (monthly mean value for each hour).
 \begin{figure}[H]
     \centering
     \resizebox{\textwidth}{!}{\includegraphics{images/graph4}}
-    \caption{Cyclists count during the day - June to September comparison (bike road near ICE Krakow Congress Centre)}
+    \caption{Cyclists count during the day --- June to September comparison (bike road near ICE Krakow Congress Centre)}
     \label{fig:graph4}
 \end{figure}
-Figure \ref{fig:graph2} shows data from table \ref{tab:iceDaily} for easier comparison of results.
+Figure \ref{fig:graph2} shows data from Table \ref{tab:iceDaily} for easier comparison of results.
 \begin{figure}[H]
     \centering
     \resizebox{\textwidth}{!}{\includegraphics{images/graph2}}
-    \caption{Cyclists count during the month - June to September comparison (bike road near ICE Krakow Congress Centre)}
+    \caption{Cyclists count during the month --- June to September comparison (bike road near ICE Krakow Congress Centre)}
     \label{fig:graph2}
 \end{figure}
-This simple example provides important information on how bicycle traffic changes on different months of the year. It shows if it grows or not. Various conclusions can be drawn. For example on figure \ref{fig:graph4} we can see that even though in September number of cyclists is higher that in June on early hours, it drops in later hours. After deeper analysis of different conditions those information can become a signal that maybe street lighting needs to be improved, considering that September is still quite warm month. It could be one of the ways to plan local government's projects. Second example shows different interpretation of similar data collected from camera on Lema Street where bike road was modernized. Table \ref{tab:lemaCount} show cyclists count during days of random week from July (before modernization) and October (after modernization). Table 
-\begin{table}[h]
+This simple example provides important information on how bicycle traffic changes on different months of the year. It shows if it grows or not. Various conclusions can be drawn. For example in Figure \ref{fig:graph4} we can see that even though in September number of cyclists is higher that in June on early hours, it drops in later hours. After deeper analysis of different conditions those information can become a signal that maybe street lighting needs to be improved, considering that September is still quite warm month. It could be one of the ways to plan local government's projects.
+\section{Data Collected From Camera at Lema Street}
+\label{sec:lema}
+Second example shows different interpretation of similar data collected from camera on Lema Street where bike road was modernized. Table \ref{tab:lemaCount} show cyclists count during days of random week from July (before modernization) and October (after modernization). Table \ref{tab:lemaSum} shows summed numbers from Table \ref{tab:lemaCount}. 
+\begin{table}[H]
     \centering
     \resizebox{\textwidth}{!}{
     \begin{tabular}{|r|r|r|r|r|r|r|r|r|r|r|r|r|r|}
 \hline
-\multicolumn{7}{|c|}{Cyclists count throughout the day - July}                    & \multicolumn{7}{c|}{Cyclists count throughout the day - October}                     \\ \hline
+\multicolumn{7}{|c|}{Cyclists count throughout the day --- July}                    & \multicolumn{7}{c|}{Cyclists count throughout the day --- October}                     \\ \hline
 09:45:00 & 10:45:00 & 11:45:00 & 12:45:00 & 13:45:00 & 14:45:00 & 15:45:00 & 09:45:00 & 10:45:00 & 11:45:00 & 12:45:00 & 13:45:00 & 14:45:00 & 15:45:00 \\ \hline
 20       & 53       & 68       & 118      & 178      & 210      & 190      & 232      & 255      & 249      & 263      & 260      & 192      & 178      \\ \hline
 229      & 261      & 180      & 386      & 210      & 305      & 436      & 419      & 291      & 311      & 424      & 353      & 216      & 259      \\ \hline
@@ -162,15 +168,15 @@ This simple example provides important information on how bicycle traffic change
 293      & 179      & 130      & 171      & 49       & 27       & 12       & 485      & 519      & 331      & 242      & 118      & 97       & 41       \\ \hline
 315      & 184      & 153      & 360      & 482      & 496      & 521      & 54       & 307      & 83       & 47       & 77       & 161      & 282      \\ \hline
 \end{tabular}}
-    \caption{Cyclist count during the day - week from July to week from October comparison (bike road on Lema Street)}
+    \caption{Cyclist count during the day --- week from July to week from October comparison (bike road on Lema Street)}
     \label{tab:lemaCount}
 \end{table}
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular}{|r|r|r|}
 \hline
 \multicolumn{1}{|l|}{}                & \multicolumn{2}{c|}{Cyclists count}                                \\ \hline
-\multicolumn{1}{|l|}{Day of the week} & \multicolumn{1}{l|}{6-13 July} & \multicolumn{1}{l|}{5-12 October} \\ \hline
+\multicolumn{1}{|l|}{Day of the week} & \multicolumn{1}{l|}{6--13 July} & \multicolumn{1}{l|}{5--12 October} \\ \hline
 1                                     & 837                            & 1629                              \\ \hline
 2                                     & 2007                           & 2273                              \\ \hline
 3                                     & 1876                           & 1552                              \\ \hline
@@ -179,21 +185,21 @@ This simple example provides important information on how bicycle traffic change
 6                                     & 861                            & 1833                              \\ \hline
 7                                     & 2511                           & 1011                              \\ \hline
 \end{tabular}
-    \caption{Daily cyclists count collected from street camera on Lema Street (sum of numbers for each day from table \ref{tab:lemaCount})}
+    \caption{Daily cyclists count collected from street camera on Lema Street (sum of numbers for each day from Table \ref{tab:lemaCount})}
     \label{tab:lemaSum}
 \end{table}
 Aggregation of this data for putting it on graphs like in first example:
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \resizebox{\textwidth}{!}{\includegraphics{images/graph6}}
-    \caption{Weekly mean cyclists count on Lema Street for each hour - July to October comparison}
+    \caption{Weekly mean cyclists count on Lema Street for each hour --- July to October comparison}
     \label{fig:lemaCount}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \resizebox{\textwidth}{!}{\includegraphics{images/graph5}}
-    \caption{Cyclists count on Lema Street during chosen week - July to October comparison}
+    \caption{Cyclists count on Lema Street during chosen week --- July to October comparison}
     \label{fig:lemaCount}
 \end{figure}
 
-Showing this data on a graph like in figures above won't show striking differences, but we can still see that overall more cyclists were detected in October than in July. There can be a lot of reasons why data looks like this, but collected numbers are very good indicators to compare with other parameters like weather conditions in specific month (temperature, rainfall level). Altogether it can serve as a tool for evaluation of made investments or for planning new ones.
+Showing this data on a graph like in Figures above won't show striking differences, but we can still see that overall more cyclists were detected in October than in July. There can be a lot of reasons why data looks like this, but collected numbers are very good indicators to compare with other parameters like weather conditions in specific month (temperature, rainfall level). Altogether it can serve as a tool for evaluation of made investments or for planning new ones.
