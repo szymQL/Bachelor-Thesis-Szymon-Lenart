@@ -172,70 +172,17 @@ Running detection process is also really easy with YOLOv5 API, because it contai
         \item conf - confidence threshold value (probability that detected object is indeed cyclist) - everything with higher confidence is considered as cyclist.
     \end{itemize}
 \end{enumerate}
-The figure below shows a frame from a video on which inference was performed with Counter already implemented (different cameras has counter line put on different place of course)
+The figures below shows a frame from a video after inference was performed with Counter already implemented (different cameras has counter line put on different place)
 \begin{figure} [h]
     \centering
      \resizebox{\textwidth}{!}{\includegraphics{images/inference}}
-    \caption{Frame from video file generated during the detection process (examplary inference performed on video file from camera on Lema Street)}
+    \caption{Frame from video file generated during the detection process (inference performed on video file from camera on Lema Street)}
     \label{fig:inference}
 \end{figure}
+\begin{figure} [h]
+    \centering
+     \resizebox{\textwidth}{!}{\includegraphics{images/inference5}}
+    \caption{Frame from video file generated during the detection process ( inference performed on video file from camera near ICE Krakow Congress Centre)}
+    \label{fig:inference5}
+\end{figure}
 During the testing phase, I have been saving every video generated during the inference process. However, after that I quit doing that, because a generated video was almost five times bigger than the original one (1-hour video downloaded from website video stream was approximately 700MB big, so saving every result of inference would fill my Google Drive memory very quickly). Instead, I have implemented that at the end of execution of \colorbox{Gray}{detect.py} information about the video was written to \colorbox{Gray}{result.csv} file (video name, video duration, cyclist count).
-\section{Exemplary Evaluation of Results}
-\label{sec:results}
-To familiarize with the potential of Visual Bicycle Counter, I have prepared an exemplary interpretation of the Counter's data. I had chosen video files collected between 10 AM and 8 PM from a random week before modernization of bike road on Lema Street and performed inference on them. The same I have done with videos from the random week after modernization. I have aggregated this data to show mean value for each hour of the day of the week and put it on a graph. This is how the aggregated data looks like graphically:
-\begin{figure}[h]
-    \centering
-    \resizebox{\textwidth}{!}{\includegraphics{images/graph}}
-    \caption{Cyclists count during the day (weekly mean value) on Lema Street}
-    \label{fig:graph}
-\end{figure}
-\newline Even this simple example provides important information on whether investment turned out to be a success or not. We can see that even though data after modernization was collected in October - the month we cannot call cyclists favourite - number of cyclist per minute was higher than in June. It could be one of the ways to evaluate local government's projects. Second example showing different measure that can be taken with data collected by the Counter is to simply take daily cyclists count and compare it on the scale of the month. In table \ref{tab:j-s} we can see cyclists count collected in June and September (between 8 AM and 6 PM - I have chosen those hours because in September it gets quite dark after 6 PM, so there is less cyclists) as well as sum of those numbers.
-\begin{table}[]
-\centering
-\begin{tabular}{|r|r|r|}
-\hline
-\multicolumn{1}{|l|}{}                 & \multicolumn{2}{c|}{Cyclist count}                         \\ \hline
-\multicolumn{1}{|l|}{Day of the month} & \multicolumn{1}{l|}{June} & \multicolumn{1}{l|}{September} \\ \hline
-1                                      & 2062                      & 772                            \\ \hline
-2                                      & 1638                      & 1728                           \\ \hline
-3                                      & 2037                      & 2400                           \\ \hline
-4                                      & 2247                      & 2081                           \\ \hline
-5                                      & 974                       & 2119                           \\ \hline
-6                                      & 2447                      & 701                            \\ \hline
-7                                      & 1420                      & 1026                           \\ \hline
-8                                      & 1184                      & 2358                           \\ \hline
-9                                      & 1633                      & 2614                           \\ \hline
-10                                     & 1407                      & 1921                           \\ \hline
-11                                     & 1789                      & 2248                           \\ \hline
-12                                     & 1540                      & 2011                           \\ \hline
-13                                     & 1588                      & 2094                           \\ \hline
-14                                     & 1364                      & 2476                           \\ \hline
-15                                     & 2007                      & 2602                           \\ \hline
-16                                     & 1475                      & 2677                           \\ \hline
-17                                     & 1255                      & 1837                           \\ \hline
-18                                     & 1533                      & 1840                           \\ \hline
-19                                     & 1179                      & 1622                           \\ \hline
-20                                     & 1314                      & 1624                           \\ \hline
-21                                     & 631                       & 2124                           \\ \hline
-22                                     & 772                       & 2463                           \\ \hline
-23                                     & 2505                      & 2242                           \\ \hline
-24                                     & 1720                      & 2151                           \\ \hline
-25                                     & 2222                      & 1547                           \\ \hline
-26                                     & 1729                      & 735                            \\ \hline
-27                                     & 1648                      & 838                            \\ \hline
-28                                     & 2063                      & 963                            \\ \hline
-29                                     & 1201                      & 1321                           \\ \hline
-30                                     & 2659                      & 552                            \\ \hline
-\multicolumn{1}{|l|}{Sum}              & 49243                     & 53687                          \\ \hline
-\end{tabular}
-\caption{Daily cyclists count collected from street camera near ICE Krakow Conference Center - comparison of June (before modernization) and September (after modernization)}
-\label{tab:j-s}
-\end{table}
-
-Showing this data on a graph like in figure \ref{fig:j-s2} won't show striking differences, but we can still see that overall more cyclists were detected in September than in June. There can be a lot of reasons why data is like this, but collected numbers are very good indicators to compare with other parameters like weather conditions in specific month (temperature, rainfall level).
-\begin{figure}
-    \centering
-    \resizebox{\textwidth}{!}{\includegraphics{images/graph2}}
-    \caption{Cyclists count in June and September}
-    \label{fig:j-s2}
-\end{figure}
