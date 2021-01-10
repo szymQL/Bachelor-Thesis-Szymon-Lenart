@@ -1,7 +1,7 @@
 \chapter{Practical Aspects}
 \label{cha:practicalAspects}
 
-To achieve my goal of creating Visual Bicycle Counter, I had to complete a few steps. With tools chosen, my work was to create a proper dataset for training ML model, train and evaluate this training to reach acceptable values of metrics I mentioned in section \ref{sec:theory}. After that, I could customize the API detection script to make it count cyclist rather than just detecting them using the trained model. Lastly, I used my edited script to run inference (detection) on other videos from a street camera on Lema Street and near ICE Krakow Congress Centre. I have prepared exemplary interpretation of how data obtained by my Visual Bicycle Counter can be used.
+To achieve my goal of creating Visual Bicycle Counter, I had to complete a few steps. With tools chosen, my work was to create a proper dataset for training ML model, train and evaluate this training to reach acceptable values of metrics I mentioned in Section \ref{sec:theory}. After that, I could customize the API detection script to make it count cyclist rather than just detecting them using the trained model. Lastly, I used my edited script to run inference (detection) on other videos from a street camera on Lema Street and near ICE Krakow Congress Centre. I have prepared an exemplary interpretation of how data obtained by my Visual Bicycle Counter can be used.
 \section{Data Collection}
 \label{sec:collection}
 First of all I had to collect data. To accomplish that, on June 2020 I have created Virtual Machine (VM) with Ubuntu 18.04.5 Operating System (OS). Using Unix type OS was much easier and intuitive than using it on my Windows machine. After my VM was ready, steps to obtain video files from street camera stream were as follow:
@@ -26,7 +26,7 @@ First of all I had to collect data. To accomplish that, on June 2020 I have crea
     \begin{figure}[H]
         \centering
         \resizebox{\textwidth}{!}{\includegraphics{images/crontabList}}
-        \caption{output of \colorbox{Gray}{crontab -l} command which shows what commands execution was scheduled}
+        \caption{Output of \colorbox{Gray}{crontab -l} command which shows what commands execution was scheduled}
         \label{fig:crontabList}
     \end{figure}
 \end{enumerate}
@@ -73,30 +73,30 @@ After collecting enough videos I have started to create the dataset for training
 
 \section{Environment Preparation, Training Model and Running Detection}
 \label{sec:env}
-As my working environment, I have chosen Google Colaboratory (GC) machine. It provides me with three times more GPU memory and overall better (faster) GPU device than the one in my computer, resulting in approximately six times faster training and detection processes. It was essential while performing inference (detection) because GC's machine made this operation execute close to real-time on 30 Frames Per Second (FPS) video files. My computer processed five frames per second while GC's machine processed almost 30 frames per second, what saved much time. Also, it turned out much more effective while running inference straight on the video stream from the website. Lastly, GC's machine has good Python3 support what facilitated the work. I have created Jupyter Notebook file to run code cells one by one, to speed up my work, what came especially handy while starting work on next day because sadly GC allows only a few hours of inactivity before restarting session and unsaved files are gone. To start training, I stored all necessary files like videos and labelled images on my Google Drive, connected to GC's machine. Also uploading files on the Drive and copying them on the machine was the fastest way to access my computer files. Training the model proceeded in few steps (Figures below will show code cells that have been run):
+As my working environment, I have chosen Google Colaboratory (GC) machine. It provides me with three times more GPU memory and overall better (faster) GPU device than the one in my computer, resulting in approximately six times faster training and detection processes. It was essential while performing inference (detection) because GC's machine-made this operation execute close to real-time on 30 Frames Per Second (FPS) video files. My computer-processed five frames per second while GC's machine processed almost 30 frames per second, what saved much time. Also, it turned out much more effective while running inference straight on the video stream from the website. Lastly, GC's machine has good Python3 support what facilitated the work. I have created Jupyter Notebook file to run code cells one by one, to speed up my work, what came especially handy while starting work on next day because sadly GC allows only a few hours of inactivity before restarting session and unsaved files are gone. I stored all necessary files like videos and labelled images on my Google Drive, connected to GC's machine to start training. Also uploading files on the Drive and copying them on the machine was the fastest way to access my computer files. Training the model proceeded in few steps (Figures below will show code cells that have been run):
 \begin{enumerate}
     \item After setting \colorbox{Gray}{runtime type} to GPU I mounted (connected) my Google Drive to GC's machine what creates a new directory on the machine named \colorbox{Gray}{gdrive} from which we can access Google Drive
-    \newline \begin{figure} [h]
+    \newline \begin{figure} [H]
         \centering
         \includegraphics{images/train1}
         \caption{Mounting Drive}
         \label{fig:train1}
     \end{figure}
     \item Then I cloned YoloV5 GitHub repository
-    \newline \begin{figure} [h]
+    \newline \begin{figure} [H]
         \centering
         \resizebox{\textwidth}{!}{\includegraphics{images/train2}}
         \caption{Cloning repository to machine}
         \label{fig:train2}
     \end{figure}
     \item After that, I could run the training process with installed wandb for evaluating the model during and after training.
-    \newline \begin{figure} [h]
+    \newline \begin{figure} [H]
         \centering
         \resizebox{\textwidth}{!}{\includegraphics{images/train3}}
         \caption{Command used for training the model}
         \label{fig:train3}
     \end{figure}
-    \newline Parameters used in command:
+    Parameters used in command:
     \begin{itemize}
         \item img --- bigger of two numbers in video resolution
         \item batch --- how many images to process at once (limited by GPU memory --- in my case 8 was the biggest GPU could handle)
@@ -108,7 +108,7 @@ As my working environment, I have chosen Google Colaboratory (GC) machine. It pr
 
 \section{Training Evaluation}
 \label{sec:eval}
-The first command from Figure \ref{fig:train3} installs wandb software on the machine. It automatically collects data during the training process and shows it in a more accessible manner --- charts. Below we can see how parameters mentioned in section \ref{sec:theory} (Recall, Precision and Loss) has been changing during the training process. Also, weights with the best combination of those three parameters (marked on charts) will be used for performing inference.
+The first command from Figure \ref{fig:train3} installs wandb software on the machine. It automatically collects data during the training process and shows it in a more accessible manner --- charts. Below we can see how parameters mentioned in Section \ref{sec:theory} (Recall, Precision and Loss) has been changing during the training process. Also, weights with the best combination of those three parameters (marked on charts) will be used for performing inference.
 \begin{figure} [h]
     \centering
      \resizebox{\textwidth}{!}{\includegraphics{images/eval1}}
@@ -129,40 +129,40 @@ What basically means that every cyclist on test images was found (Recall), and 9
 Running detection process is also really easy with YOLOv5 API, because it contains ready to use script \colorbox{Gray}{detect.py} that can be executed right away on video file or stream. Implementing counter was more of a challenge, because it is not implemented in API. I have chosen straight forward solution --- when a detected cyclist crosses a virtual line (on Figures \ref{fig:inference} and \ref{fig:inference5} shown as a green line drawn on video frames), counter value goes up. This approach was possible because of my Recall and Precision being on very good level. I knew every cyclist is detected on every frame of video (100\% Recall) and 90\% of detected objects are actually cyclists (Precision). Every script I have customized is put on public Github Repository \cite{repo}. Running detection process on GC's machine proceeded as follows:
 \begin{enumerate}
     \item Mounting Google Drive on GC's machine
-    \newline \begin{figure} [h]
+    \newline \begin{figure} [H]
         \centering
         \includegraphics{images/train1}
         \caption{Mounting Drive}
         \label{fig:inference0}
     \end{figure}
     \item Copying model from Drive, unzipping it and installing required dependencies 
-    \newline \begin{figure} [h]
+    \newline \begin{figure} [H]
         \centering
         \resizebox{\textwidth}{!}{\includegraphics{images/inference1}}
         \caption{Installing ready API on machine}
         \label{fig:inference1}
     \end{figure}
     \item Uploading video for perform inference on it (two ways)
-    \newline \begin{figure} [h]
+    \newline \begin{figure} [H]
         \centering
          \resizebox{\textwidth}{!}{\includegraphics{images/inference2}}
         \caption{Uploading video file straight from local machine to GC's machine (slower)}
         \label{fig:inference2}
     \end{figure}
-    \newline \begin{figure} [h]
+    \begin{figure} [H]
         \centering
          \resizebox{\textwidth}{!}{\includegraphics{images/inference3}}
         \caption{Copying video file from mounted drive after uploading video file to it (faster)}
         \label{fig:inference3}
     \end{figure}
     \item Running detection process
-    \newline \begin{figure} [h]
+    \newline \begin{figure} [H]
         \centering
          \resizebox{\textwidth}{!}{\includegraphics{images/inference4}}
         \caption{Command used for performing inference on video file using customized \colorbox{Gray}{detect.py} script}
         \label{fig:inference4}
     \end{figure}
-    \newline Parameters used in command:
+    Parameters used in command:
     \begin{itemize}
         \item img --- bigger of two numbers in video resolution
         \item source --- path to video file
