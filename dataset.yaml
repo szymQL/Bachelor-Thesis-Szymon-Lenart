@@ -1,0 +1,6 @@
+train: ../data/images/train/
+val: ../data/images/val/
+
+nc: 16
+
+names: ['dog', 'person', 'cat', 'tv', 'car', 'eatballs', 'marinara sauce', 'tomato soup', 'chicken noodle soup', 'french onion soup', 'chicken breast', 'ribs', 'pulled pork', 'hamburger', 'cavity', 'cyclist']
